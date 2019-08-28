@@ -6,7 +6,7 @@ use futures::TryStreamExt;
 use hyper::client::Client;
 use hyper::header::CONTENT_TYPE;
 use hyper::{Method, Request, Uri};
-use hyper_tls::HttpsConnector;
+use hyper_rustls::HttpsConnector;
 
 use telegram_bot_raw::{Body as TelegramBody, HttpRequest, HttpResponse, Method as TelegramMethod};
 
@@ -34,11 +34,9 @@ pub(crate) async fn request(token: &str, req: HttpRequest) -> Result<HttpRespons
         body => panic!("Unknown body type {:?}", body),
     };
 
-    let connector = HttpsConnector::new(1).map_err(|err| {
-        ::std::io::Error::new(::std::io::ErrorKind::Other, format!("tls error: {}", err))
-    })?;
+    let connector = HttpsConnector::new(1);
 
-    let client = Client::builder().build(connector);
+    let client: Client<_, hyper::Body> = Client::builder().build(connector);
 
     let response = client.request(request.unwrap()).await?;
 
