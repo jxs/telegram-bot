@@ -26,6 +26,6 @@ tokio-curl = {version = "0.1", optional = true}
 
 telegram-bot-raw = { version = "=0.6.3", path = "../raw" }
 
-hyper = { git = "https://github.com/hyperium/hyper.git" }
-hyper-rustls = { git = "https://github.com/markuskobler/hyper-rustls", branch = "futures-0.3" }
+hyper = "=0.13.0-alpha.1"
+hyper-rustls = "=0.18.0-alpha.1"
 futures-preview = "=0.3.0-alpha.18"
